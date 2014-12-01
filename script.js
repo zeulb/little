@@ -1,5 +1,5 @@
-var r = 2;
-var c = 1;
+var r = 6;
+var c = 6;
 var Grid = new Array();
 var State = new Array();
 var Num = new Array();
