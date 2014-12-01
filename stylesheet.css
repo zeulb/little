@@ -1,0 +1,244 @@
+body
+{
+	background-color: #FFDE00;
+}
+
+#titlebox
+{
+	background-color: #F5A352;
+	color:white;
+	border-radius: 5px;
+	height:75px;
+	width:100%;
+	text-align: center;
+	margin:auto;
+	margin-bottom: 5px;
+	margin-top: 0px;
+
+	cursor: pointer;
+}
+
+#title
+{
+	display:inline-block;
+	 vertical-align:middle;
+	font-family: 'Lato', sans-serif;
+	font-size:40px;
+	text-align: center;
+	margin:auto;
+	width:400px;
+	clear:both;
+}
+#score1
+{
+	display: inline;
+	font-family: 'Lato', sans-serif;
+	font-size:30px;
+	width:150px;
+	float:left;
+	
+}
+#score2
+{
+	display: inline;
+	font-family: 'Lato', sans-serif;
+	font-size:30px;
+	width:150px;
+	float:right;
+
+	
+}
+
+#boss
+{
+	text-align:center;
+	margin:auto;
+}
+
+#menu
+{
+	display:inline-block;
+	background-color: #F5A352;
+	color:white;
+	border-radius: 10px;
+	height:35px;
+	width:170px;
+	text-align: center;
+	margin:auto;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+#tog
+{
+	display:inline-block;
+	background-color: #F5A352;
+	color:white;
+	border-radius: 10px;
+	height:35px;
+	width:40px;
+	text-align: center;
+	margin:auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+#modepick
+{
+	display:inline-block;
+	background-color: #F5A352;
+	color:white;
+	border-radius: 10px;
+	height:35px;
+	width:150px;
+	text-align: center;
+	margin:auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right:50px;
+	cursor: pointer;
+}
+
+#mode
+{
+	display:inline;
+	font-family: 'Lato', sans-serif;
+	font-size:25px;
+	text-align: center;
+	margin:auto;
+	text-decoration: none;
+}
+
+
+#newgame
+{
+	display:inline;
+	font-family: 'Lato', sans-serif;
+	font-size:25px;
+	text-align: center;
+	margin:auto;
+	text-decoration: none;
+}
+
+#toggle
+{
+	display:inline;
+	font-family: 'Lato', sans-serif;
+	font-size:25px;
+	text-align: center;
+	margin:auto;
+	text-decoration: none;
+}
+
+#addobstacle
+{
+	display:inline;
+	font-family: 'Lato', sans-serif;
+	font-size:25px;
+	text-align: center;
+	margin:auto;
+	text-decoration: none;
+}
+
+#footer
+{
+	font-family: 'Lato', sans-serif;
+	font-size:12px;
+	color:grey;
+	text-align: center;
+	margin:auto;
+	margin-top:0px;
+}
+
+#box
+{
+	height:550px;
+	width:650px;
+	margin:auto;
+	text-align: center;
+	font-size:0px;
+	padding:0px 0px 0px 0px;
+}
+
+#lol
+{
+	border-radius: 10px;
+	height:18px;
+	width:200px;
+	margin:auto;
+	margin-top: 20px;
+
+}
+
+.little
+{
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	background-color:grey;
+	display:inline-block;
+	font-size:0px;
+	height:92px;
+	width:92px;
+	border-radius: 10px;
+	margin-top:2px;
+	margin-left:2px;
+}
+
+.turn1
+{
+	background-color:#23B5AF;
+}
+
+.turn2
+{
+	background-color:#E3493B;
+}
+
+.obstacle
+{
+	background-color:#3A3A3C;
+}
+
+.op1
+{
+	background-color:#a86a64;
+}
+
+.op2
+{
+	background-color:#5B9593;
+}
+
+
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#instruction
+{
+	background-color: #F5A352;
+	height:360px;
+	width:410px;
+	color:white;
+	font-family: 'Lato', sans-serif;
+	font-size:17px;
+	margin:auto;
+	position:absolute;
+	top:107px;
+	float:left;
+	border-radius: 10px;
+	padding-left:20px;
+	padding-right:20px;
+}
