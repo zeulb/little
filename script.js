@@ -190,13 +190,15 @@ $(document).ready(function(){
 			$("#container").append(Grid[i][j]);
 		}
 		$("#container").append("<br/>");
+		if (i%2==1 && i < r-1) $("#container").append("<div class='separator'></div>");
+		
 	}
 	$("#addobstacle").hide();
 	$("#tog").click(function () {
 		if (size === 2)
 		{
 			if (lastx===-1&&lasty===-1);
-			else if (lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
+			else if (lastx%2==0 && lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
 			{
 				$(getID(lastx+1,lasty)).removeClass(op[turn]);
 				$(getID(lastx,lasty+1)).removeClass(op[turn]);
@@ -212,7 +214,7 @@ $(document).ready(function(){
 		else
 		{
 			if (lastx===-1&&lasty===-1);
-			else if (lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
+			else if (lastx%2==0 && lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
 			{
 				$(getID(lastx+1,lasty)).addClass(op[turn]);
 				$(getID(lastx,lasty+1)).addClass(op[turn]);
@@ -317,7 +319,7 @@ $(document).ready(function(){
 				{
 	//				console.log("masuk4");
 				}
-				else if (lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
+				else if (lastx%2==0 && lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
 				{
 	//				console.log("masuk2");
 					$(getID(lastx+1,lasty)).removeClass(op[turn]);
@@ -345,7 +347,7 @@ $(document).ready(function(){
 			{
 				
 				if (lastx===-1&&lasty===-1);
-				else if (lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
+				else if (lastx%2== 0 && lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
 				{
 					$(getID(lastx+1,lasty)).addClass(op[turn]);
 					$(getID(lastx,lasty+1)).addClass(op[turn]);
@@ -457,7 +459,7 @@ $(document).ready(function(){
 				}
 				else if (s != r-1 && t != c-1)
 				{
-					if (State[x][y] === 0 && State[x+1][y] === 0 && State[x][y+1] === 0 && State[x+1][y+1] === 0)
+					if (x%2==0 && State[x][y] === 0 && State[x+1][y] === 0 && State[x][y+1] === 0 && State[x+1][y+1] === 0)
 					{
 						Movement = true;
 
@@ -572,7 +574,7 @@ $(document).ready(function(){
 						$(getID(x,y)).addClass(op[turn]);
 					}
 				}
-				else if (x < r-1 && y < c-1)
+				else if (x%2==0 && x < r-1 && y < c-1)
 				{
 					if (State[x][y] === 0 && State[x+1][y] === 0 && State[x][y+1] === 0 && State[x+1][y+1] === 0)
 					{

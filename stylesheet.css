@@ -154,7 +154,7 @@ body
 
 #box
 {
-	height:550px;
+	height:420px;
 	width:650px;
 	margin:auto;
 	text-align: center;
@@ -183,8 +183,8 @@ body
 	background-color:grey;
 	display:inline-block;
 	font-size:0px;
-	height:92px;
-	width:92px;
+	height:70px;
+	width:70px;
 	border-radius: 10px;
 	margin-top:2px;
 	margin-left:2px;
@@ -241,4 +241,8 @@ body
 	border-radius: 10px;
 	padding-left:20px;
 	padding-right:20px;
+}
+
+.separator {
+	height:10px;
 }
