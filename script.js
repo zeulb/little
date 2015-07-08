@@ -93,7 +93,6 @@ function getRandomMove()
 	Move.x = 0;
 	Move.y = 0;
 	Move.s = 0;
-	console.log("inside "+isi);
 	for(var s=0;s<r;s++)
 	{
 		for(var t=0;t<c;t++)
@@ -109,7 +108,7 @@ function getRandomMove()
 			}
 			if (s < r-1 && t < c-1)
 			{
-				if (State[s][t] === 0 && State[s+1][t] === 0 && State[s][t+1] === 0 && State[s+1][t+1] === 0)
+				if (s%2 === 0 && State[s][t] === 0 && State[s+1][t] === 0 && State[s][t+1] === 0 && State[s+1][t+1] === 0)
 				{
 					var Move = new Object();
 					Move.x = s;
@@ -121,8 +120,6 @@ function getRandomMove()
 			}
 		}
 	}
-	console.log(items.length);
-	console.log(items[Math.floor(Math.random()*items.length)]);
 	return items[Math.floor(Math.random()*items.length)];
 }
 
@@ -429,7 +426,6 @@ $(document).ready(function(){
 						
 						if (vsMode)
 						{
-							console.log("vsmode 1");
 							var Move = getBestMove();
 							console.log(Move);
 							var x = Move.x;
@@ -533,7 +529,6 @@ $(document).ready(function(){
 						if (vsMode)
 						{
 							
-							console.log("vsmode 2");
 							var Move = getBestMove();
 							console.log(Move);
 							var x = Move.x;
