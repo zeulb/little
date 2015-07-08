@@ -215,7 +215,7 @@ function getHardBoard() {
 		numBlocked--;
 	}
 	var Move = getBestMove();
-	if (Move.type === 'best') {
+	if (Move.type === 'random') {
 		for(var i=0;i<r;i++) {
 			for(var j=0;j<c;j++) {
 				State[i][j] = 0;
@@ -434,10 +434,10 @@ $(document).ready(function(){
 								{
 									var extra = '';
 									if (difficulty === 'easy') {
-										extra = "| key : \"ANSWERCODEFORSMALLTESTCASE\""
+										extra = "<br/>token : \"ANSWERCODEFORSMALLTESTCASE\""
 									}
 									else if (difficulty === 'hard') {
-										extra = "| key : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
+										extra = "<br/>token : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
 									}
 									$("#title").html("You are the winner!"+extra);
 									p1win++;
