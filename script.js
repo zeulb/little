@@ -549,10 +549,10 @@ $(document).ready(function(){
 								{
 									var extra = '';
 									if (difficulty === 'easy') {
-										extra = "| key : \"ANSWERCODEFORSMALLTESTCASE\""
+										extra = "<br/>token : \"ANSWERCODEFORSMALLTESTCASE\""
 									}
 									else if (difficulty === 'hard') {
-										extra = "| key : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
+										extra = "<br/>token : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
 									}
 									$("#title").html("You are the winner!"+extra);
 									p1win++;
