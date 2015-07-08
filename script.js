@@ -13,7 +13,10 @@ if (difficulty === 'easy') {
 
 }
 else if (difficulty === 'hard') {
-	player = "Cow"
+	r = 8;
+	c = 8;
+	isi = r*c;
+	player = "Budi Imboz"
 }
 
 for(var i=0;i<r;i++)
@@ -33,25 +36,6 @@ function getID(i,j)
 {
 	return "#s"+(i*c+j).toString();
 }
-
-var wonMessages = [
-	"Okay, I won this",
-	"Bye bye",
-	"I win, You lose",
-	"HAHAHA",
-	"O yeah",
-	"Wkwkwk",
-	"This is over",
-]
-
-var notSureMessages = [
-	"Hmmmmm",
-	"Nice move...",
-	"Ummmmmmm",
-	"Hmmmmmmmmm",
-	"I'm not sure about this",
-	"I didn't expect that..."
-]
 
 var cowMessages = [
 	"Mooooooo",
@@ -218,6 +202,29 @@ function getBestMove()
 	}
 }
 
+function getHardBoard() {
+	var numBlocked = Math.floor(Math.random() * 6) + 6;
+	while(numBlocked > 0) {
+		var s = Math.floor(Math.random() * r);
+		var t = Math.floor(Math.random() * c);
+		while(State[s][t] == 1) {
+			s = Math.floor(Math.random() * r);
+			t = Math.floor(Math.random() * c);
+		}
+		State[s][t] = 1;
+		numBlocked--;
+	}
+	var Move = getBestMove();
+	if (Move.type === 'best') {
+		for(var i=0;i<r;i++) {
+			for(var j=0;j<c;j++) {
+				State[i][j] = 0;
+			}	
+		}
+		getHardBoard();
+	}
+}
+
 var vsMode = true;
 
 var Movement = false;
@@ -227,8 +234,6 @@ var p2win = 0;
 
 
 $(document).ready(function(){
-
-$('#score2').html(player+" : 0 ");
 	for(var i = 0;i < r;i++)
 	{
 		for(var j=0;j<c;j++)
@@ -239,7 +244,17 @@ $('#score2').html(player+" : 0 ");
 		if (i%2==1 && i < r-1) $("#container").append("<div class='separator'></div>");
 		
 	}
-	$("#addobstacle").hide();
+	if (difficulty === 'hard') {
+		getHardBoard();
+		for(var s=0;s<r;s++) {
+			for(var t=0;t<c;t++) {
+				if (State[s][t] === 1) {
+					isi--;
+					$(getID(s,t)).addClass("obstacle");
+				}
+			}
+		}
+	}
 	$("#tog").click(function () {
 		if (size === 2)
 		{
@@ -274,33 +289,6 @@ $('#score2').html(player+" : 0 ");
 			$("#toggle").html("2!");
 		}
 	});
-	$("#modepick").click(function () {
-		if (!Movement)
-		{
-			p1win = 0;
-			p2win = 0;
-			
-			if (vsMode)
-			{
-				vsMode = false;
-				$("#mode").html("Multi-player!");
-				$("#score1").html("Red : 0");
-				$("#score2").html("Blue : 0");
-			}
-			else
-			{
-				vsMode = true;
-				$("#mode").html("Single-player!");
-				$("#score1").html("You : 0");
-				$("#score2").html(player+" : 0");
-			}
-		}
-		else
-		{
-			$("#mode").fadeOut("slow");
-			$("#mode").fadeIn("fast");
-		}
-	});
 	$("#instruction").click(function () {
 		$("#instruction").fadeOut("verySlow");
 			
@@ -324,8 +312,17 @@ $('#score2').html(player+" : 0 ");
 				$(getID(s,t)).removeClass("obstacle");
 			}
 		}
-		$("#newgame").hide();
-		$("#addobstacle").show();	
+		if (difficulty === 'hard') {
+			getHardBoard();
+			for(var s=0;s<r;s++) {
+				for(var t=0;t<c;t++) {
+					if (State[s][t] === 1) {
+						isi--;
+						$(getID(s,t)).addClass("obstacle");
+					}
+				}
+			}
+		}
 		$("#title").html("Little Square!");
 			
 	});
@@ -432,7 +429,6 @@ $('#score2').html(player+" : 0 ");
 								{
 									$("#title").html("Red is the winner!");
 									p1win++;
-									$("#score1").html("Red : "+p1win);
 								}
 								else
 								{
@@ -445,21 +441,20 @@ $('#score2').html(player+" : 0 ");
 									}
 									$("#title").html("You are the winner!"+extra);
 									p1win++;
-									$("#score1").html("You : "+p1win);
 								}
 							}
 							else
 							{
 								$("#title").html("Blue is the winner!");
 								p2win++;
-								$("#score2").html("Blue : "+p2win);
 							}
 						}
 						turn = 1-turn;
 						
 						if (vsMode)
 						{
-							var Move = getBestMove();
+							var Move = getBestMove()
+							/*
 							if (difficulty === 'hard')
 								$("#title").html("<small>Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]+"</small>");
 							else if (difficulty === 'easy') {
@@ -469,7 +464,7 @@ $('#score2').html(player+" : 0 ");
 								else {
 									$("#title").html("<small>Budi : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]+'</small>');
 								}
-							}
+							}*/
 							var x = Move.x;
 							var y = Move.y;
 							if (Move.s === 2)
@@ -499,7 +494,6 @@ $('#score2').html(player+" : 0 ");
 							{
 								p2win++;
 								$("#title").html(player+" is the winner!");
-								$("#score2").html(player+" : "+p2win);
 							}
 							turn = 1-turn;
 						}
@@ -550,7 +544,6 @@ $('#score2').html(player+" : 0 ");
 								{
 									$("#title").html("Red is the winner!");
 									p1win++;
-									$("#score1").html("Red : "+p1win);
 								}
 								else
 								{
@@ -563,14 +556,12 @@ $('#score2').html(player+" : 0 ");
 									}
 									$("#title").html("You are the winner!"+extra);
 									p1win++;
-									$("#score1").html("You : "+p1win);
 								}
 							}
 							else
 							{
 								$("#title").html("Blue is the winner!");
 								p2win++;
-								$("#score2").html("Blue : "+p2win);
 							}
 						}
 						turn = 1-turn;
@@ -579,6 +570,7 @@ $('#score2').html(player+" : 0 ");
 						{
 							
 							var Move = getBestMove();
+							/*
 							if (difficulty === 'hard')
 								$("#title").html("Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]);
 							else if (difficulty === 'easy') {
@@ -589,6 +581,7 @@ $('#score2').html(player+" : 0 ");
 									$("#title").html("Budi : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]);
 								}
 							}
+							*/
 							var x = Move.x;
 							var y = Move.y;
 							if (Move.s === 2)
@@ -619,7 +612,6 @@ $('#score2').html(player+" : 0 ");
 							{
 								p2win++;
 								$("#title").html(player+" is the winner!");
-								$("#score2").html(player+" : "+p2win);
 							}
 							turn = 1-turn;
 						}
