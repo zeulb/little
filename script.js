@@ -2,20 +2,18 @@ var r = 6;
 var c = 6;
 var Grid = new Array();
 var State = new Array();
-var Num = new Array();
+var Dp;
 var Block = new Array();
 var isi = r*c;
 for(var i=0;i<r;i++)
 {
 	Grid.push(new Array());
 	State.push(new Array());
-	Num.push(new Array());
 	Block.push(new Array());
 	for(var j=0;j<c;j++)
 	{
 			Grid[i].push("<div class = \"little\" id = \"s"+(i*c+j)+"\"> </div>");
 			State[i].push(0);
-			Num[i].push(-1);
 			Block[i].push(0);
 	//		console.log(Grid[i][j]);
 	}
@@ -35,6 +33,57 @@ var op = new Array(2);
 op[0] = "op1";
 op[1] = "op2";
 
+function go(p, fl, fr) {
+	if (fl > fr) return 0;
+  if (Dp[p][fl][fr] !== -1) return Dp[p][fl][fr];
+  //console.log(p + " "+ fl + " " + fr+" "+Dp[p][fl][fr])
+  var ada = [];
+  for(var a=fl;a<=fr-1;a++)
+  {
+      if (p < r-1 && State[p][a] === 0 && State[p][a+1] === 0 && State[p+1][a] === 0 && State[p+1][a+1] === 0)
+      {
+          ada[go(p,fl,a-1)^go(p,a+2,fr)] = 1;
+      }
+  }
+  for(var a=fl;a<=fr;a++)
+  {
+      for(var b=p;b<=Math.min(p+1,r-1);b++)
+      {
+          if (State[b][a] === 0)
+          {
+              var val = 0;
+              if (p < r-1 && State[b^1][a] === 0) val ^= 1;
+              val ^= go(p,fl,a-1)^go(p,a+1,fr);
+              ada[val] = 1;
+          }
+      }
+  }
+  Dp[p][fl][fr] = 0;
+  while(ada[Dp[p][fl][fr]]) Dp[p][fl][fr]++;
+  //console.log("nim val " + p + " "+ fl + " " + fr+" "+Dp[p][fl][fr])
+  return Dp[p][fl][fr];
+}
+
+function calculateNim() {
+	Dp = []
+	for(var i=0;i<r;i++) {
+		Dp.push([]);
+	}
+	for(var k=0;k<r;k++) {
+		for(var i=0;i<c;i++) {
+			Dp[k][i] = []
+			for(var j=0;j<c;j++) {
+				Dp[k][i].push(-1);
+			}
+		}
+	}
+	var nim = 0;
+  for(var a=0;a<=r-1;a+=2)
+  {
+      nim ^= go(a,0,c-1);
+  }
+  return nim;
+}
 
 function getRandomMove()
 {
@@ -55,6 +104,7 @@ function getRandomMove()
 					Move.x = s;
 					Move.y = t;
 					Move.s = 1;
+					Move.type = 'random';
 					items.push(Move);
 			}
 			if (s < r-1 && t < c-1)
@@ -65,6 +115,7 @@ function getRandomMove()
 					Move.x = s;
 					Move.y = t;
 					Move.s = 2;
+					Move.type = 'random';
 					items.push(Move);
 				}
 			}
@@ -77,100 +128,62 @@ function getRandomMove()
 
 function getBestMove()
 {
-	if (isi > 15)
+	candidate = []
+	for(var s=0;s<r;s++)
 	{
-		return getRandomMove();
+		for(var t=0;t<c;t++)
+		{
+			//console.log(s + " "+ t);
+			if (State[s][t] === 0)
+			{
+				State[s][t] = 1;
+				//console.log(s + " " + t + " " + calculateNim());
+				if (calculateNim() == 0) {
+					Move = new Object();
+					Move.x = s;
+					Move.y = t;
+					Move.s = 1;
+					Move.type = 'best';
+					candidate.push(Move);
+				}
+
+				State[s][t] = 0;
+			}
+		}
 	}
-	else
+
+	for(var s=0;s<r-1;s+=2)
 	{
-		console.log("isi "+isi);
-		var dp = new Array(1 << isi);
-		console.log("isi "+isi);
-		dp[0] = 0;
-		var id = 0;
-		for(var s=0;s<r;s++)
+		for(var t=0;t<c-1;t++)
 		{
-			for(var t=0;t<c;t++)
+			if (State[s][t] === 0 && State[s][t+1] === 0 && State[s+1][t] === 0 && State[s+1][t+1] === 0)
 			{
-				if (State[s][t] === 0)
-				{
-					Num[s][t] = id++;
+				State[s][t] = 1;
+				State[s][t+1] = 1;
+				State[s+1][t] = 1;
+				State[s+1][t+1] = 1;
+
+				if (calculateNim() == 0) {
+					Move = new Object();
+					Move.x = s;
+					Move.y = t;
+					Move.s = 2;
+					Move.type = 'best';
+					candidate.push(Move);
 				}
+
+				State[s][t] = 0;
+				State[s][t+1] = 0;
+				State[s+1][t] = 0;
+				State[s+1][t+1] = 0;
 			}
 		}
-		console.log("isi "+isi);
-		var Move = new Object();
-		Move.x = 0;
-		Move.y = 0;
-		Move.s = 0;
-		console.log("isi "+isi);
-		for(var bitMask=0;bitMask<(1 << isi);bitMask++)
-		{
-			for(var s=0;s<r;s++)
-			{
-				for(var t=0;t<c;t++)
-				{
-					if (Num[s][t] >= 0)
-					{
-						if (bitMask & (1 << Num[s][t]))
-						{
-							Block[s][t] = 0;
-						}
-						else
-						{
-							Block[s][t] = 1;
-						}
-					}
-				}
-			}
-			var exist = new Array;
-			for(var a=0;a<=2*id;a++) exist.push(0);
-			for(var s=0;s<r;s++)
-			{
-				for(var t=0;t<c;t++)
-				{
-					if (Block[s][t] === 0)
-					{
-						if (dp[bitMask-(1 << Num[s][t])] === 0)
-						{
-							Move.x = s;
-							Move.y = t;
-							Move.s = 1;
-						}
-						exist[dp[bitMask-(1 << Num[s][t])]] = 1;
-					}
-					if (s < r-1 && t < c-1)
-					{
-						if (Block[s][t] === 0 && Block[s+1][t] === 0 && Block[s][t+1] === 0 && Block[s+1][t+1] === 0)
-						{
-							if (dp[bitMask-(1 << Num[s][t])-(1 << Num[s+1][t])-(1 << Num[s][t+1])-(1 << Num[s+1][t+1])] === 0)
-							{
-								Move.x = s;
-								Move.y = t;
-								Move.s = 2;
-							}
-							exist[dp[bitMask-(1 << Num[s][t])-(1 << Num[s+1][t])-(1 << Num[s][t+1])-(1 << Num[s+1][t+1])]] = 1;
-						}
-					}
-				}
-			}
-			dp[bitMask] = 0;
-			
-			while(exist[dp[bitMask]] === 1) dp[bitMask]++;
-		}
-		while(dp.length > 0) 
-		{
-			    dp.pop();
-		}
-		console.log("out "+isi);
-		if (dp[bitMask] === 0)
-		{
-			return getRandomMove();
-		}
-		else
-		{
-			return Move;
-		}
+	}
+	if (candidate.length > 0) {
+		return candidate[Math.floor(Math.random() * candidate.length)];
+	}
+	else {
+		return getRandomMove();
 	}
 }
 
@@ -270,7 +283,6 @@ $(document).ready(function(){
 			for(var t=0;t<c;t++)
 			{
 				State[s][t] = 0;
-				Num[s][t] = -1;
 				Block[s][t] = 0;
 				$(getID(s,t)).removeClass("turn1");
 				$(getID(s,t)).removeClass("turn2");
