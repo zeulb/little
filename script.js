@@ -7,10 +7,9 @@ var Block = new Array();
 var isi = r*c;
 var difficulty = location.search.split('dengklek=')[1]
 var player = "AI"
-console.log(difficulty);
 
 if (difficulty === 'easy') {
-	player = "Supervin"
+	player = "Budi"
 
 }
 else if (difficulty === 'hard') {
@@ -461,15 +460,14 @@ $('#score2').html(player+" : 0 ");
 						if (vsMode)
 						{
 							var Move = getBestMove();
-							console.log(Move);
 							if (difficulty === 'hard')
 								$("#title").html("<small>Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]+"</small>");
 							else if (difficulty === 'easy') {
 								if (Move.type === 'random') {
-									$("#title").html("<small>Supervin : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]+'</small>');
+									$("#title").html("<small>Budi : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]+'</small>');
 								}
 								else {
-									$("#title").html("<small>Supervin : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]+'</small>');
+									$("#title").html("<small>Budi : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]+'</small>');
 								}
 							}
 							var x = Move.x;
@@ -581,15 +579,14 @@ $('#score2').html(player+" : 0 ");
 						{
 							
 							var Move = getBestMove();
-							console.log(Move);
 							if (difficulty === 'hard')
 								$("#title").html("Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]);
 							else if (difficulty === 'easy') {
 								if (Move.type === 'random') {
-									$("#title").html("Supervin : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]);
+									$("#title").html("Budi : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]);
 								}
 								else {
-									$("#title").html("Supervin : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]);
+									$("#title").html("Budi : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]);
 								}
 							}
 							var x = Move.x;
