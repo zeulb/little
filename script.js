@@ -5,6 +5,18 @@ var State = new Array();
 var Dp;
 var Block = new Array();
 var isi = r*c;
+var difficulty = location.search.split('dengklek=')[1]
+var player = "AI"
+console.log(difficulty);
+
+if (difficulty === 'easy') {
+	player = "Supervin"
+
+}
+else if (difficulty === 'hard') {
+	player = "Cow"
+}
+
 for(var i=0;i<r;i++)
 {
 	Grid.push(new Array());
@@ -22,6 +34,35 @@ function getID(i,j)
 {
 	return "#s"+(i*c+j).toString();
 }
+
+var wonMessages = [
+	"Okay, I won this",
+	"Bye bye",
+	"I win, You lose",
+	"HAHAHA",
+	"O yeah",
+	"Wkwkwk",
+	"This is over",
+]
+
+var notSureMessages = [
+	"Hmmmmm",
+	"Nice move...",
+	"Ummmmmmm",
+	"Hmmmmmmmmm",
+	"I'm not sure about this",
+	"I didn't expect that..."
+]
+
+var cowMessages = [
+	"Mooooooo",
+	"Moooooo000000",
+	"Moooo",
+	"Mo0o0o0o0o0",
+	"MMooo",
+	"MMMoo",
+	"Mooooooo.."
+]
 
 var turn = 0;
 var size = 1;
@@ -187,6 +228,8 @@ var p2win = 0;
 
 
 $(document).ready(function(){
+
+$('#score2').html(player+" : 0 ");
 	for(var i = 0;i < r;i++)
 	{
 		for(var j=0;j<c;j++)
@@ -250,7 +293,7 @@ $(document).ready(function(){
 				vsMode = true;
 				$("#mode").html("Single-player!");
 				$("#score1").html("You : 0");
-				$("#score2").html("AI : 0");
+				$("#score2").html(player+" : 0");
 			}
 		}
 		else
@@ -388,20 +431,27 @@ $(document).ready(function(){
 							{
 								if (!vsMode)
 								{
-									$("#title").html("Red Wins!");
+									$("#title").html("Red is the winner!");
 									p1win++;
 									$("#score1").html("Red : "+p1win);
 								}
 								else
 								{
-									$("#title").html("You Wins!");
+									var extra = '';
+									if (difficulty === 'easy') {
+										extra = "| key : \"ANSWERCODEFORSMALLTESTCASE\""
+									}
+									else if (difficulty === 'hard') {
+										extra = "| key : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
+									}
+									$("#title").html("You are the winner!"+extra);
 									p1win++;
 									$("#score1").html("You : "+p1win);
 								}
 							}
 							else
 							{
-								$("#title").html("Blue Wins!");
+								$("#title").html("Blue is the winner!");
 								p2win++;
 								$("#score2").html("Blue : "+p2win);
 							}
@@ -412,6 +462,16 @@ $(document).ready(function(){
 						{
 							var Move = getBestMove();
 							console.log(Move);
+							if (difficulty === 'hard')
+								$("#title").html("<small>Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]+"</small>");
+							else if (difficulty === 'easy') {
+								if (Move.type === 'random') {
+									$("#title").html("<small>Supervin : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]+'</small>');
+								}
+								else {
+									$("#title").html("<small>Supervin : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]+'</small>');
+								}
+							}
 							var x = Move.x;
 							var y = Move.y;
 							if (Move.s === 2)
@@ -440,8 +500,8 @@ $(document).ready(function(){
 							if (isi === 0)
 							{
 								p2win++;
-								$("#title").html("AI Wins!");
-								$("#score2").html("AI : "+p2win);
+								$("#title").html(player+" is the winner!");
+								$("#score2").html(player+" : "+p2win);
 							}
 							turn = 1-turn;
 						}
@@ -490,20 +550,27 @@ $(document).ready(function(){
 							{
 								if (!vsMode)
 								{
-									$("#title").html("Red Wins!");
+									$("#title").html("Red is the winner!");
 									p1win++;
 									$("#score1").html("Red : "+p1win);
 								}
 								else
 								{
-									$("#title").html("You Wins!");
+									var extra = '';
+									if (difficulty === 'easy') {
+										extra = "| key : \"ANSWERCODEFORSMALLTESTCASE\""
+									}
+									else if (difficulty === 'hard') {
+										extra = "| key : \"ANSWERCODEFORLARGELARGELARGETESTCASE\""
+									}
+									$("#title").html("You are the winner!"+extra);
 									p1win++;
 									$("#score1").html("You : "+p1win);
 								}
 							}
 							else
 							{
-								$("#title").html("Blue Wins!");
+								$("#title").html("Blue is the winner!");
 								p2win++;
 								$("#score2").html("Blue : "+p2win);
 							}
@@ -515,6 +582,16 @@ $(document).ready(function(){
 							
 							var Move = getBestMove();
 							console.log(Move);
+							if (difficulty === 'hard')
+								$("#title").html("Cow : "+cowMessages[Math.floor(Math.random()*cowMessages.length)]);
+							else if (difficulty === 'easy') {
+								if (Move.type === 'random') {
+									$("#title").html("Supervin : "+notSureMessages[Math.floor(Math.random()*notSureMessages.length)]);
+								}
+								else {
+									$("#title").html("Supervin : "+wonMessages[Math.floor(Math.random()*wonMessages.length)]);
+								}
+							}
 							var x = Move.x;
 							var y = Move.y;
 							if (Move.s === 2)
@@ -544,8 +621,8 @@ $(document).ready(function(){
 							if (isi === 0)
 							{
 								p2win++;
-								$("#title").html("AI Wins!");
-								$("#score2").html("AI : "+p2win);
+								$("#title").html(player+" is the winner!");
+								$("#score2").html(player+" : "+p2win);
 							}
 							turn = 1-turn;
 						}

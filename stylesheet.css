@@ -26,7 +26,7 @@ body
 	font-size:40px;
 	text-align: center;
 	margin:auto;
-	width:400px;
+	width:600px;
 	clear:both;
 }
 #score1
@@ -34,7 +34,7 @@ body
 	display: inline;
 	font-family: 'Lato', sans-serif;
 	font-size:30px;
-	width:150px;
+	width:200px;
 	float:left;
 	
 }
@@ -43,7 +43,7 @@ body
 	display: inline;
 	font-family: 'Lato', sans-serif;
 	font-size:30px;
-	width:150px;
+	width:200px;
 	float:right;
 
 	
