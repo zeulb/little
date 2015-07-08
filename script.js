@@ -15,7 +15,6 @@ for(var i=0;i<r;i++)
 			Grid[i].push("<div class = \"little\" id = \"s"+(i*c+j)+"\"> </div>");
 			State[i].push(0);
 			Block[i].push(0);
-	//		console.log(Grid[i][j]);
 	}
 }
 
@@ -36,7 +35,6 @@ op[1] = "op2";
 function go(p, fl, fr) {
 	if (fl > fr) return 0;
   if (Dp[p][fl][fr] !== -1) return Dp[p][fl][fr];
-  //console.log(p + " "+ fl + " " + fr+" "+Dp[p][fl][fr])
   var ada = [];
   for(var a=fl;a<=fr-1;a++)
   {
@@ -60,7 +58,6 @@ function go(p, fl, fr) {
   }
   Dp[p][fl][fr] = 0;
   while(ada[Dp[p][fl][fr]]) Dp[p][fl][fr]++;
-  //console.log("nim val " + p + " "+ fl + " " + fr+" "+Dp[p][fl][fr])
   return Dp[p][fl][fr];
 }
 
@@ -87,7 +84,6 @@ function calculateNim() {
 
 function getRandomMove()
 {
-	console.log("inside "+isi);
 	var items = new Array();
 	var Move = new Object();
 	Move.x = 0;
@@ -130,11 +126,9 @@ function getBestMove()
 	{
 		for(var t=0;t<c;t++)
 		{
-			//console.log(s + " "+ t);
 			if (State[s][t] === 0)
 			{
 				State[s][t] = 1;
-				//console.log(s + " " + t + " " + calculateNim());
 				if (calculateNim() == 0) {
 					Move = new Object();
 					Move.x = s;
@@ -184,7 +178,7 @@ function getBestMove()
 	}
 }
 
-var vsMode = false;
+var vsMode = true;
 
 var Movement = false;
 
@@ -247,14 +241,14 @@ $(document).ready(function(){
 			if (vsMode)
 			{
 				vsMode = false;
-				$("#mode").html("Challenge!");
+				$("#mode").html("Multi-player!");
 				$("#score1").html("Red : 0");
 				$("#score2").html("Blue : 0");
 			}
 			else
 			{
 				vsMode = true;
-				$("#mode").html("Versus!");
+				$("#mode").html("Single-player!");
 				$("#score1").html("You : 0");
 				$("#score2").html("AI : 0");
 			}
@@ -316,33 +310,25 @@ $(document).ready(function(){
 		
 	});
 	$(document).keypress(function(event){
-	//	console.log(event.which);
-	//	console.log(lastx + " "+ lasty);
 		if (event.which===49)
 		{
-	//		console.log("masuk66");
 			if (size === 2)
 			{
-	//			console.log("masuk55");
 				if (lastx===-1&&lasty===-1)
 				{
-	//				console.log("masuk4");
 				}
 				else if (lastx%2==0 && lastx < r-1 && lasty < c-1 && State[lastx][lasty] === 0 && State[lastx+1][lasty] === 0 && State[lastx][lasty+1] === 0 && State[lastx+1][lasty+1] === 0)
 				{
-	//				console.log("masuk2");
 					$(getID(lastx+1,lasty)).removeClass(op[turn]);
 					$(getID(lastx,lasty+1)).removeClass(op[turn]);
 					$(getID(lastx+1,lasty+1)).removeClass(op[turn]);
 				}
 				else if (State[lastx][lasty] === 0)
 				{
-	//				console.log("masuk");
 					$(getID(lastx,lasty)).addClass(op[turn]);
 				}
 				else
 				{
-	//				console.log("masuk3");
 				}
 				size = 1;
 				$("#toggle").html("1!");
@@ -351,7 +337,6 @@ $(document).ready(function(){
 		}
 		if (event.which===50)
 		{
-	//		console.log("masuk77");
 			if (size === 1)
 			{
 				
@@ -371,7 +356,6 @@ $(document).ready(function(){
 			}
 		}
 	});
-	//console.log(size);
 	for(var s = 0;s<r;s++)
 	{
 		for(var t=0;t<c;t++)
